@@ -1,12 +1,42 @@
 from tkinter import *
 from tkinter.messagebox import *
-root = Tk()
-root.title("Tunniplaan")
+from tkinter import messagebox as mb
+from random import *
+import time, sys
+from Fail import *
 users=[]
 password=[]
-users=failist_lugemine("users.txt",users)
-password=failist_pass("password.txt",password)
+users=loe_failist_listisse("users.txt",users)
+password=loe_failist_listisse("pass.txt",password)
+root = Tk()
+def fail():
+    global login
+    global pas
+    global users
+    global password
+    Label(aken1,text="Придумайте\nЛогин:").grid(row=0, column=0)
+    login = Entry(aken1,width=15)
+    login.grid(row=0, column=1)
+    Label(aken1,text="Придумайте\nПароль:").grid(row=1, column=0)
+    pas = Entry(aken1,width=15)
+    pas.grid(row=1, column=1)
+    Label(aken1,text=" ").grid(row=2, column=4)
+    Label(aken1,text=" ").grid(row=2, column=5)
+    users.append(login.get())
+    password.append(pas.get())  
+
+def log():
+    if (login not in users) or (login in users):
+	Label(aken1,text="Вы зарегестрировали логин!").grid(row=1,column=1)
+	users=rida_salvestamine("users.txt",login)
+	Label(aken1,text="Такой логин существует!").grid(row=1,column=2)
+
 def reg():
+    root.destroy()
+    global login
+    global pas
+    global users
+    global password
     aken1=Tk()
     Label(aken1,text="Придумайте\nЛогин:").grid(row=0, column=0)
     login = Entry(aken1,width=15)
@@ -14,25 +44,38 @@ def reg():
     Label(aken1,text="Придумайте\nПароль:").grid(row=1, column=0)
     pas = Entry(aken1,width=15)
     pas.grid(row=1, column=1)
-    Button(aken1,text="Продолжить").grid(row=2, column=1)
     Label(aken1,text=" ").grid(row=2, column=4)
     Label(aken1,text=" ").grid(row=2, column=5)
+    users.append(login.get())
+    password.append(pas.get())  
+    Button(text="Выйте",command=exit1).grid(row=2,column=1)
+    Button(text="Породолжить",command=fail).grid(row=2,column=1)
 
 def avt():
-    users   
+    root.destroy()  
     aken2=Tk(   )
     Label(aken2,text="Впишите\nЛогин:").grid(row=0, column=0)
     login = Entry(aken2,width=15)
     login.grid(row=0, column=1)
     Label(aken2,text="Впишите\nПароль:").grid(row=1, column=0)
-    pas = Entry(aken2,width=15)
+    pas = Entry(aken2,width=15  )
     pas.grid(row=1, column=1)
     Button(aken2,text="Продолжить").grid(row=2, column=1)
     Label(aken2,text=" ").grid(row=2, column=4)
     Label(aken2,text=" ").grid(row=2, column=5)
+    Button(text="Выйте",command=exit3).grid(row=2,column=1)
+    Button(text="Породолжить",command=fail).grid(row=2,column=1)
+
 def exit():
+    if askyesno("Вопрос","Хотите вы выйти?"):
+         reg.destroy()
+def exit2():
     if askyesno("Вопрос" ,"Хотите ли вы выйти?"):
         root.destroy()
+def exit3():
+    if askyesno("Вопрос","Хотите вы выйти?"):
+         avt.destroy()
+
 def clas():
 	showinfo(title="Классный час",message="Доп.урок\n Учитель - Laaneväli-Toots Alina\n Кабинет в 236")
 def estõ():
@@ -170,15 +213,17 @@ def plan():
     Label(text=" ",bg="white",font="Arial 13",width=11,height=3,relief=RIDGE).grid(row=9, column=11)
     Label(text=" ",bg="white",font="Arial 13",width=11,height=3,relief=RIDGE).grid(row=10, column=11)
 
-root.mainloop()
-Button(text="Регистрация", command=reg).grid(row=2, column=1)
-Button(text="Авторизоваться", command=avt).grid(row=3, column=1)
-Button(text="Выйти из программы", command=exit).grid(row=4, column=1)
+Button(text="Расписание", command=plan).grid(row=1, column=3)
+Button(text="Регистрация", command=reg).grid(row=2, column=3)
+Button(text="Авторизоваться", command=avt).grid(row=3, column=3)
+Button(text="Выйти из программы", command=exit).grid(row=4, column=3)
 Label(text=" ").grid(row=2, column=0)
 Label(text=" ").grid(row=3, column=0)
 Label(text=" ").grid(row=4, column=0)
-Label(text=" ").grid(row=2, column=2)
-Label(text=" ").grid(row=3, column=2)
-Label(text=" ").grid(row=4, column=2)
+Label(text=" ").grid(row=1, column=0)
+Label(text=" ").grid(row=1, column=5)
+Label(text=" ").grid(row=2, column=5)
+Label(text=" ").grid(row=3, column=5)
+Label(text=" ").grid(row=4, column=5)
 
 root.mainloop()
